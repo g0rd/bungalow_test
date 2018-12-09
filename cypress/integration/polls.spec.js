@@ -3,16 +3,22 @@ describe('Poll Tests', function(){
     cy.visit('http://test-challenge.bungalow.com/polls/')
   })
 
-  it('votes', function(){
-      
-	cy.get('.action-radios [type="radio"]').not('[disabled]')
-	  .check().should('be.checked')
-
-	// .check() accepts a value argument
-	cy.get('.action-radios [type="radio"]')
-		.check('radio1').should('be.checked')
-	
-	cy.get('.action-form').submit()
-		.next().should('contain', 'Your form has been submitted!')
+  it('home page content exists', function(){      
+	cy.contains("Add a Poll")
   })
+  
+  it('votes', function(){
+	  
+	cy.visit('http://test-challenge.bungalow.com/polls/2')
+	
+	cy.get('[type="radio"]').check('7')
+		
+	cy.get('[type="radio"]')
+		.check('7').should('be.checked')
+	
+	cy.get('form').submit()
+	
+	cy.url().should('eq', 'http://test-challenge.bungalow.com/polls/2/results/')
+  })
+  
 })
